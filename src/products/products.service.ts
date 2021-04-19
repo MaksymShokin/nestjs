@@ -19,6 +19,28 @@ export class ProductsService {
   }
 
   getProductById(id: string) {
+    return this.findProduct(id);
+  }
+
+  updateProduct(id: string, title: string, description: string, price: number) {
+    const product = this.findProduct(id);
+    const productIndex = this.products.findIndex(
+      (product) => product.id === id,
+    );
+    const updatedProduct = { ...product };
+
+    updatedProduct.title = title ? title : updatedProduct.title;
+    updatedProduct.description = description
+      ? description
+      : updatedProduct.description;
+    updatedProduct.price = price ? price : updatedProduct.price;
+
+    this.products[productIndex] = updatedProduct;
+
+    return { ...updatedProduct };
+  }
+
+  private findProduct(id: string) {
     const product = this.products.find((product) => product.id === id);
 
     if (!product) {
