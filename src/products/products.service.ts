@@ -40,6 +40,18 @@ export class ProductsService {
     return { ...updatedProduct };
   }
 
+  deleteProduct(id: string) {
+    const productIndex = this.products.findIndex(
+      (product) => product.id === id,
+    );
+
+    if (productIndex < 0) {
+      throw new NotFoundException('Could not find product');
+    }
+
+    return this.products.splice(productIndex, 1);
+  }
+
   private findProduct(id: string) {
     const product = this.products.find((product) => product.id === id);
 
